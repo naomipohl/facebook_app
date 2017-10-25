@@ -1,0 +1,22 @@
+Style/SymbolArray:
+  Enabled: false
+Style/EmptyMethod:
+  Enabled: false
+Style/TrivialAccessors:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false
+Lint/HandleExceptions:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'db/*'
+    - 'spec/**/*'
+    - 'vendor/**/*'
+    - 'Gemfile'
+    - 'config/**/*'

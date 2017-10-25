@@ -1,0 +1,43 @@
+<h1>Users</h1>
+
+<table class="table table-light">
+  <thead>
+    <tr>
+      <th class="table-dark bg-primary">Name</th>
+      <th class="table-dark bg-primary">Email</th>
+      <th class="table-dark bg-primary" colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, user %></td>
+        <td><%= user.email %></td>
+        <% if logged_in? %>
+          <% if current_user == user %>
+            <td><%= link_to 'Edit Profile', edit_user_path(user) %></td>
+            <td><%= link_to 'Delete Account', user, method: :delete %></td>
+          <% elsif current_user.accepted_friends.include? user %>
+            <td><%= link_to 'Remove Friend', remove_friendship_user_path(user), method: :delete %></td>
+            <td></td>
+          <% elsif current_user.outgoing_friend_requests.include? user %>
+            <td><%= link_to 'Cancel Friend Request', remove_friendship_user_path(user), method: :delete %></td>
+            <td></td>
+          <% elsif current_user.incoming_friend_requests.include? user %>
+            <td><%= link_to 'Accept Friend Request', accept_friend_request_user_path(user), method: :patch %></td>
+            <td><%= link_to 'Decline Friend Request', remove_friendship_user_path(user), method: :delete %></td>
+          <% else %>
+            <td><%= link_to 'Send Friend Request', send_friend_request_user_path(user), method: :post %></td>
+            <td></td>
+          <% end %>
+        <% else %>
+          <td></td>
+          <td></td>
+        <% end %>    
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

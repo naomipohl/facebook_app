@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-12">
+    <h2>
+      <%= @user.name %>'s Profile
+      <div class="float-right">
+        <% if logged_in? %>
+          <% if @user == current_user %>
+            <%= link_to 'Edit Profile', edit_user_path(current_user), class: 'btn btn-primary' %>
+            <%= link_to 'Delete Account', current_user, method: :delete, class: 'btn btn-danger' %>
+          <% elsif current_user.accepted_friends.include? @user %>
+            <%= link_to 'Remove Friend', remove_friendship_user_path(@user), method: :delete, class: 'btn btn-danger' %>
+          <% elsif current_user.outgoing_friend_requests.include? @user %>
+            <%= link_to 'Cancel Friend Request', remove_friendship_user_path(@user), method: :delete, class: 'btn btn-danger' %>
+          <% elsif current_user.incoming_friend_requests.include? @user %>
+            <%= link_to 'Accept Friend Request', accept_friend_request_user_path(@user), method: :patch, class: 'btn btn-success' %>
+            <%= link_to 'Decline Friend Request', remove_friendship_user_path(@user), method: :delete, class: 'btn btn-danger' %>
+          <% else %>
+            <%= link_to 'Send Friend Request', send_friend_request_user_path(@user), method: :post, class: 'btn btn-success' %>
+          <% end %>
+        <% end %>
+      </div>
+    </h2>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-lg-4 order-lg-1 order-2">
+    <table class="table table-light">
+      <thead>
+        <th class="table-dark bg-primary">Friends</th>
+        <th class="table-dark bg-primary" colspan="2"></th>
+      </thead>
+
+      <tbody>
+        <% if @user.accepted_friends.empty? %>
+          <td>No friends yet... Go make some!</td>
+        <% end %>
+        <% @user.accepted_friends.each do |friend| %>
+          <td><%= link_to friend.name, friend %></td> 
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-8 order-1 order-lg-2">
+    <% if current_user == @user %>
+      <div class="clearfix">
+        <%= render 'statuses/form', status: @status %>
+      </div>
+    <br>
+    <% end %>
+    <% if @user.statuses.empty? %>
+      <p class="text-center"><%= @user.name %> doesn't have any statuses yet.</p>
+    <% else %>
+      <% @user.statuses.each do |status| %>
+        <%= render 'statuses/status', status: status %>
+        <br>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<table class="table table-light">
+  <thead>
+    <tr>
+      <th class="table-dark bg-primary">Incoming Friend Requests</th>
+      <th class="table-dark bg-primary" colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if current_user.incoming_friend_requests.empty? %>
+      <td>No incoming friend requests.</td>
+    <% else %>
+      <% current_user.incoming_friend_requests.each do |friend| %>
+        <tr>
+          <td><%= link_to friend.name, friend %></td>
+          <td><%= link_to 'Accept Friend Request', accept_friend_request_user_path(friend), method: :patch %></td>
+          <td><%= link_to 'Decline Friend Request', remove_friendship_user_path(friend), method: :delete %></td>
+        </tr>
+      <% end %>
+  <% end %>
+</table>
+
+<table class="table table-light">
+  <thead>
+    <tr>
+      <th class="table-dark bg-primary">Outgoing Friend Requests</th>
+      <th class="table-dark bg-primary" colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if current_user.outgoing_friend_requests.empty? %>
+      <td>No outgoing friend requests.</td>
+    <% else %>
+      <% current_user.outgoing_friend_requests.each do |friend| %>
+        <tr>
+          <td><%= link_to friend.name, friend %></td>
+          <td><%= link_to 'Cancel Friend Request', remove_friendship_user_path(friend), method: :delete %></td>
+          <td></td>
+        </tr>
+      <% end %>
+  <% end %>
+</table>

@@ -1,0 +1,27 @@
+<% if logged_in? %>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <%= render 'statuses/form', status: @status %>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <% if @statuses.empty? %>
+        <p class="text-center">There aren't any statuses yet, you should create one!</p>
+      <% else %>
+        <% @statuses.each do |status| %>
+          <%= render 'statuses/status', status: status %>
+          <br>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <h1>Welcome to CIS 196's Facebook Lite!</h1>
+      <p>Sign up or log in to get started!</p>
+    </div>
+  </div>
+<% end %>
