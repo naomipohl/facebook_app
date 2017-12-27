@@ -18,7 +18,7 @@ group :development, :test do
   gem 'capybara', '2.15.1'
   gem 'database_cleaner', '1.6.1'
   gem 'rack_session_access', '0.1.1'
-  gem 'rubocop', '0.47.1'
+  gem rubocop ~> 0.49.0
 end
 
 group :development do
